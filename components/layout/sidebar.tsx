@@ -45,8 +45,11 @@ export function Sidebar({ collapsed }: SidebarProps) {
   const [podsExpanded, setPodsExpanded] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Ensure threads is always an array
+  const safeThreads = threads || [];
+
   // Group threads by date
-  const groupedThreads = threads.reduce(
+  const groupedThreads = safeThreads.reduce(
     (groups, thread) => {
       const today = new Date();
       const threadDate = new Date(thread.updatedAt);
@@ -71,11 +74,11 @@ export function Sidebar({ collapsed }: SidebarProps) {
       groups[groupKey].push(thread);
       return groups;
     },
-    {} as Record<string, typeof threads>
+    {} as Record<string, typeof safeThreads>
   );
 
   const filteredThreads = searchQuery
-    ? threads.filter((t) =>
+    ? safeThreads.filter((t) =>
         t.title.toLowerCase().includes(searchQuery.toLowerCase())
       )
     : null;
@@ -220,7 +223,7 @@ export function Sidebar({ collapsed }: SidebarProps) {
                     <button className="flex items-center justify-between rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors">
                       <span>All Chats</span>
                       <span className="rounded-md bg-secondary px-1.5 py-0.5 text-xs font-medium">
-                        {threads.length}
+                        {safeThreads.length}
                       </span>
                     </button>
                   </div>
@@ -294,7 +297,7 @@ export function Sidebar({ collapsed }: SidebarProps) {
                 </div>
               ))
             )}
-            {threads.length === 0 && (
+            {safeThreads.length === 0 && (
               <p className="px-3 py-4 text-center text-sm text-muted-foreground">
                 No conversations yet
               </p>
