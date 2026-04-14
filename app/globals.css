@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Light Mode Color Palette - Modern Soft SaaS */
+  --color-background: #fbfbfd;
+  --color-foreground: #0f172a;
+  --color-card: #ffffff;
+  --color-card-foreground: #0f172a;
+  --color-primary: #1d4ed8;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f1f5f9;
+  --color-secondary-foreground: #334155;
+  --color-muted: #f8fafc;
+  --color-muted-foreground: #64748b;
+  --color-accent: #3b82f6;
+  --color-accent-foreground: #ffffff;
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #1d4ed8;
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+  --color-success: #16a34a;
+  --color-success-foreground: #ffffff;
+  --color-warning: #d97706;
+  --color-warning-foreground: #ffffff;
+  
+  /* Radius */
+  --radius: 0.75rem;
+  --radius-xl: 2rem;
+  
+  /* Shadows */
+  --shadow-island: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+  --shadow-island-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+  
+  /* Fonts */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+/* Dark Mode - Glassmorphic & Deep */
+.dark {
+  --color-background: #0a0a0b;
+  --color-foreground: #fafafa;
+  --color-card: rgba(23, 23, 23, 0.5);
+  --color-card-foreground: #fafafa;
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: rgba(38, 38, 38, 0.5);
+  --color-secondary-foreground: #a1a1aa;
+  --color-muted: rgba(38, 38, 38, 0.3);
+  --color-muted-foreground: #71717a;
+  --color-accent: #60a5fa;
+  --color-accent-foreground: #ffffff;
+  --color-border: rgba(63, 63, 70, 0.6);
+  --color-input: rgba(63, 63, 70, 0.6);
+  --color-ring: #3b82f6;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-success: #22c55e;
+  --color-success-foreground: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-foreground: #ffffff;
+  
+  --shadow-island: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  --shadow-island-hover: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
+}
+
+/* Base Styles */
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted-foreground);
+  border-radius: 3px;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-foreground);
+  opacity: 0.7;
+}
+
+/* Floating Island Component */
+.island {
+  background-color: var(--color-card);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-island);
+}
+
+.dark .island {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Message Bubble Styles */
+.message-user {
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
+
+.message-assistant {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-foreground);
+}
+
+/* Tool Call Styles */
+.tool-call {
+  background-color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.tool-call-pending {
+  border-color: var(--color-warning);
+}
+
+.tool-call-success {
+  border-color: var(--color-success);
+}
+
+.tool-call-error {
+  border-color: var(--color-destructive);
+}
+
+/* Animation Utilities */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+.animate-slide-left {
+  animation: slide-in-left 0.3s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Typing indicator */
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-muted-foreground);
+  animation: pulse-glow 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
